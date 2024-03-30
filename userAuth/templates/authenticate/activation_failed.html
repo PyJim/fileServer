@@ -1,0 +1,39 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/style.css"> 
+    <title>Login</title> 
+</head> 
+
+    <body>
+        <div class="responsive-form"> 
+            <h1>File Server</h1> 
+            <h3> 
+                Sorry. Something went wrong
+            </h3>
+            <form action={% url 'request_activation_email' %} method="POST" class="form-container"> 
+                {% csrf_token %}
+                    
+                <label for="email" 
+                    class="form-container-label"> 
+                    Email: 
+                </label> 
+                <input type="email"
+                    id="email"
+                    name="email" 
+                    placeholder="Your email" 
+                    class="form-container-input"
+                    required>
+    
+                <button type="submit" 
+                        class="form-container-button"> 
+                    Request new mail 
+                </button> 
+            </form> 
+        </div> 
+    </body> 
+
+</html>
