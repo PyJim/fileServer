@@ -25,7 +25,12 @@ body {
     display: flex;
     flex-direction: column; 
 } 
-
+.others{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
 .responsive-form h1 { 
     color: green
 } 

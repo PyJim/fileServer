@@ -8,4 +8,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def files_page(request):
-    return render(request, 'files.html')
+    user = request.user
+    email = user.email
+    return render(request, 'files.html', {'user': user})

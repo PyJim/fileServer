@@ -53,7 +53,7 @@ def send_activation_email(user, request):
 
 def send_forgot_password_reset_email(request, user):
     current_site =get_current_site(request)
-    email_subject = 'Activate your account'
+    email_subject = 'Reset Password'
     email_body = render_to_string('authenticate/password_OTP.html', {
         'user': user,
         'domain': current_site,
@@ -252,7 +252,7 @@ def forgot_password(request):
     
 
 
-def forgot_password_request(request, uidb64, token):
+def reset_forgotten_password(request, uidb64, token):
 
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -260,27 +260,29 @@ def forgot_password_request(request, uidb64, token):
     except Exception as e:
         user=None
 
-    if user and generate_token.check_token(user, token):
+    if not (user and generate_token.check_token(user, token)):
+        return render(request, 'authenticate/forgot_password_reset_failed.html') 
 
-        if request.method == 'POST':
-            context = {'has_error': False, 'data': request.POST}
-            password = request.POST.get('password')
-            confirm_password = request.POST.get('confirm_password')
+    if request.method == 'POST':
+        context = {'has_error': False, 'data': request.POST}
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
 
-            if len(password) < 6:
-                messages.add_message(request, messages.ERROR, 'Password must be at least 6 characters')
-                context['has_error']=True
-            
-            if password != confirm_password:
-                messages.add_message(request, messages.ERROR, 'Passwords do not match')
-                context['has_error']=True
+        if len(password) < 6:
+            messages.add_message(request, messages.ERROR, 'Password must be at least 6 characters')
+            context['has_error']=True
+        
+        if password != confirm_password:
+            messages.add_message(request, messages.ERROR, 'Passwords do not match')
+            context['has_error']=True
 
-            if context['has_error']:
-                return render(request, 'authenticate/forgot_password_reset_failed.html', context)
+        if context['has_error']:
+            return render(request, 'authenticate/forgot_password_reset_failed.html', context)
 
-            user.set_password(password)
-            user.save()
-            messages.add_message(request, messages.SUCCESS, 'Password changed Successfully, You can now login')
-            return redirect('login')
+        user.set_password(password)
+        user.save()
+        messages.add_message(request, messages.SUCCESS, 'Password changed Successfully, You can now login')
+        return redirect('login')
     
-    return render(request, 'authenticate/forgot_password_reset_failed.html', {"user": user})
+    else:
+        return render(request, 'authenticate/reset_forgotten_password.html', {"data": user})
