@@ -42,7 +42,17 @@
             <tbody>
                 {% for file in files %}
                 <tr>
-                    <td class="thumbnail"><img src="{% static 'images/file.png' %}" alt="Thumbnail"></td>
+                    <td class="thumbnail">
+                        {% if file.file_type == 'image' %}
+                            <img src="{% static 'images/img2.png' %}" alt="Thumbnail">
+                        {% elif file.file_type == 'document' %}
+                            <img src="{% static 'images/file1.png' %}" alt="Thumbnail">
+                        {% elif file.file_type == 'video'%}
+                            <img src="{% static 'images/vid1.png' %}" alt="Thumbnail">
+                        {% else %}
+                            <img src="{% static 'images/other1.png' %}" alt="Thumbnail">
+                        {% endif %}
+                    </td>
                     <td class="title">
                         <div class="file-content">
                             <p>{{ file.title }}</p>

@@ -21,13 +21,13 @@ class File(models.Model):
             if file_extension:
                 file_extension = file_extension.lower()
                 if file_extension in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']:
-                    self.file_type = 'Image'
+                    self.file_type = 'image'
                 elif file_extension in ['.pdf', '.doc', '.docx', '.txt', '.ppt', '.xls', '.xlsx']:
-                    self.file_type = 'Document'
+                    self.file_type = 'document'
                 elif file_extension in ['.mp4', '.avi', '.mkv', '.mov', '.wmv']:
                     self.file_type = 'Video'
                 else:
-                    self.file_type = 'Unknown'
+                    self.file_type = 'unknown'
         super().save(*args, **kwargs)
 
     def __str__(self):
