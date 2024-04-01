@@ -141,6 +141,8 @@ AUTHENTICATION_BACKENDS = ['userAuth.backends.EmailBackend']
 
 LOGIN_URL = '/signin/'
 
+LOGOUT_REDIRECT_URL = '/signin/'
+
 
 
 # Email Config

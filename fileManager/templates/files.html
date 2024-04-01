@@ -10,12 +10,66 @@
 </head>
 <body>
     <div class="navbar">
-        <h3>File Server</h3>
+        <h2>File Server</h2>
         <div class="user-profile">
-            <h4 class="username">{{user.email}}</h4>
-            <img src="{% static 'images/settings.png' %}" alt="profile photo">
+            <h4 class="username">{{ user.email }}</h4>
+            <div class="dropdown">
+                <img src="{% static 'images/profile.png' %}" alt="profile photo">
+                <div class="dropdown-content">
+                    <a href="/reset_password">Change Password</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">logout</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="container">
+        <div class="searchbar">
+            <input type="text" placeholder="search">
+            <button>search</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Thumbnail</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td class="thumbnail"><img src="{% static 'images/file.png' %}" alt="Thumbnail"></td>
+                    <td class="title">
+                        <div class="file-content">
+                            <p>{{ file.title }}</p>
+                            <div class="links">
+                                <a href="{{file.path}}" download="">Download</a>
+                                <a href="">Send</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="description">{{ file.description }}</td>
+                    <td class="date">{{ file.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
+    <script>
+        // JavaScript to toggle dropdown visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileImage = document.querySelector('.user-profile img');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            
+            profileImage.addEventListener('click', function() {
+                dropdownContent.classList.toggle('show');
+            });
+        });
+    </script>
 </body>
 </html>
