@@ -4,7 +4,8 @@
 <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/style.css"> 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
     <title>Signup</title> 
 </head> 
 
@@ -17,9 +18,6 @@
                 </h3> 
                 <form action="" method="POST" class="form-container">
                     {% csrf_token %}
-                    
-                    
-                    
     
                     <label for="email" 
                         class="form-container-label"> 
@@ -60,6 +58,9 @@
                         Create Account 
                     </button> 
                 </form> 
+                <div class="others">
+                    <a href="/signin/">Already have an account? Signin</a> 
+                </div>
             </div>
             {% if messages %}
                 {% for message in messages %}

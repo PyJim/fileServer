@@ -13,6 +13,8 @@ from .utils import generate_token
 from django.core.mail import EmailMessage
 from django.conf import settings
 import threading
+from django.contrib.auth.decorators import login_required
+
 
 
 class EmailThread(threading.Thread):
@@ -47,6 +49,32 @@ def send_activation_email(user, request):
 
     EmailThread(email).start()
 
+
+
+def send_forgot_password_reset_email(request, user):
+    current_site =get_current_site(request)
+    email_subject = 'Activate your account'
+    email_body = render_to_string('authenticate/password_OTP.html', {
+        'user': user,
+        'domain': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': generate_token.make_token(user)
+    })
+
+    email = EmailMessage(
+        subject=email_subject, 
+        body=email_body,
+        from_email=settings.EMAIL_FROM_USER,
+        to=[user.email],
+
+    )
+
+    EmailThread(email).start()
+
+
+
+def home(request):
+    return redirect('login')
 
 
 def signup(request):
@@ -109,8 +137,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            url = '/fileManager/'
-            return redirect(url)
+            return redirect('files')
             
         else:
             # Return an 'invalid login' error message.
@@ -120,8 +147,10 @@ def login_user(request):
     else:
         return render(request, 'authenticate/login.html', {})
 
+@login_required
 def logout_user(request):
-    return HttpResponse('Logout')
+    logout(request)
+    return redirect('login')
 
 def activate_user(request, uidb64, token):
 
@@ -164,9 +193,94 @@ def request_activation_email(request):
 
 
 
+@login_required
 def reset_password(request):
-    return render(request, 'reset_password.html')
+    if request.method == 'POST':
+        context = {'has_error': False, 'data': request.POST}
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
 
-def reset_password_token(request):
-    return render(request, 'password_token.html')
+        # get current user information
+        user = request.user
 
+        try:
+            email = user.email
+            user = EmailBackend().authenticate(request, username=email, password=current_password)
+        except Exception as e:
+            user=None
+            
+
+        if user is not None:
+            if new_password != confirm_password:
+                messages.add_message(request, messages.ERROR, 'Passwords do not match')
+                context['has_error']=True
+
+            else:
+                user.set_password(new_password)
+                user.save()
+                messages.add_message(request, messages.SUCCESS, 'Password changed successfully')
+                return redirect("files")
+            
+            if context['has_error']:
+                return render(request, 'authenticate/reset_password.html', context)
+        else:
+            messages.add_message(request, messages.ERROR, 'something went wrong. Check password')
+            context['has_error']=True
+            return render(request, 'authenticate/reset_password.html', context)
+    else:
+        return render(request, 'authenticate/reset_password.html')
+
+
+        
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        user = User.objects.get(email=email)
+
+        if user is not None:
+            send_forgot_password_reset_email(request=request, user=user)
+            messages.add_message(request, messages.SUCCESS, 'Password reset link sent successfully. Please check your email')
+            return redirect("login")
+        else:
+            messages.add_message(request, messages.ERROR, 'something went wrong. Please check your email')
+            return render(request, 'authenticate/forgot_password.html')
+
+    else:
+        return render(request, 'authenticate/forgot_password.html')
+    
+
+
+def forgot_password_request(request, uidb64, token):
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except Exception as e:
+        user=None
+
+    if user and generate_token.check_token(user, token):
+
+        if request.method == 'POST':
+            context = {'has_error': False, 'data': request.POST}
+            password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
+
+            if len(password) < 6:
+                messages.add_message(request, messages.ERROR, 'Password must be at least 6 characters')
+                context['has_error']=True
+            
+            if password != confirm_password:
+                messages.add_message(request, messages.ERROR, 'Passwords do not match')
+                context['has_error']=True
+
+            if context['has_error']:
+                return render(request, 'authenticate/forgot_password_reset_failed.html', context)
+
+            user.set_password(password)
+            user.save()
+            messages.add_message(request, messages.SUCCESS, 'Password changed Successfully, You can now login')
+            return redirect('login')
+    
+    return render(request, 'authenticate/forgot_password_reset_failed.html', {"user": user})

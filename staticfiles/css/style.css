@@ -21,7 +21,9 @@ body {
     border-radius: 8px; 
     border: 2px solid green; 
     background-color: #fff; 
-    padding: 25px; 
+    padding: 25px;
+    display: flex;
+    flex-direction: column; 
 } 
 
 .responsive-form h1 { 

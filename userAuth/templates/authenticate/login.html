@@ -4,7 +4,8 @@
 <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/style.css"> 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
     <title>Login</title> 
 </head> 
 
@@ -47,8 +48,13 @@
                     <button type="submit" 
                             class="form-container-button"> 
                         Login 
-                    </button> 
+                    </button>
+                    
                 </form> 
+                <div class="others">
+                    <a href="/forgot_password/">Forgot Password</a> 
+                    <a href="/signup/">Do not have an account? Signup</a> 
+                </div>
             </div> 
             {% if messages %}
                 {% for message in messages %}
