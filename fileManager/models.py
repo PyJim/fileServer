@@ -1,6 +1,14 @@
-import os
 from django.db import models
+import os
 
+class FileManager(models.Manager):
+    def search(self, query, file_type=None):
+        queryset = self.get_queryset().filter(title__icontains=query)
+        
+        if file_type:
+            queryset = queryset.filter(file_type=file_type)
+        
+        return queryset
 
 class File(models.Model):
     id = models.AutoField(primary_key=True)
@@ -11,6 +19,8 @@ class File(models.Model):
     file_type = models.CharField(max_length=50, blank=True)
     downloads_count = models.IntegerField(default=0)
     emailed_count = models.IntegerField(default=0)
+    
+    objects = FileManager()
 
     def save(self, *args, **kwargs):
         # Set the path attribute to the URL of the uploaded file
@@ -32,3 +42,6 @@ class File(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ["-downloads_count"]

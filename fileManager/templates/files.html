@@ -27,8 +27,12 @@
     </div>
     <div class="container">
         <div class="searchbar">
-            <input type="text" placeholder="search">
-            <button>search</button>
+            
+            <form method="post" action="{% url 'files' %}">
+                {% csrf_token %}
+                <input type="text" placeholder="search" name="query" value="{{query}}">
+                <button type="submit">Search</button>
+            </form>
         </div>
         <table>
             <thead>
@@ -40,32 +44,34 @@
                 </tr>
             </thead>
             <tbody>
-                {% for file in files %}
-                <tr>
-                    <td class="thumbnail">
-                        {% if file.file_type == 'image' %}
-                            <img src="{% static 'images/img2.png' %}" alt="Thumbnail">
-                        {% elif file.file_type == 'document' %}
-                            <img src="{% static 'images/file1.png' %}" alt="Thumbnail">
-                        {% elif file.file_type == 'video'%}
-                            <img src="{% static 'images/vid1.png' %}" alt="Thumbnail">
-                        {% else %}
-                            <img src="{% static 'images/other1.png' %}" alt="Thumbnail">
-                        {% endif %}
-                    </td>
-                    <td class="title">
-                        <div class="file-content">
-                            <p>{{ file.title }}</p>
-                            <div class="links">
-                                <a href="{{file.path}}" download="">Download</a>
-                                <a href="">Send</a>
+                {% if files|length > 0%}
+                    {% for file in files %}
+                    <tr>
+                        <td class="thumbnail">
+                            {% if file.file_type == 'image' %}
+                                <img src="{% static 'images/img2.png' %}" alt="Thumbnail">
+                            {% elif file.file_type == 'document' %}
+                                <img src="{% static 'images/file1.png' %}" alt="Thumbnail">
+                            {% elif file.file_type == 'video'%}
+                                <img src="{% static 'images/vid1.png' %}" alt="Thumbnail">
+                            {% else %}
+                                <img src="{% static 'images/other1.png' %}" alt="Thumbnail">
+                            {% endif %}
+                        </td>
+                        <td class="title">
+                            <div class="file-content">
+                                <p>{{ file.title }}</p>
+                                <div class="links">
+                                    <a href="download/{{file.pk}}">Download</a>
+                                    <a href="email/{{file.pk}}">Send</a>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="description">{{ file.description }}</td>
-                    <td class="date">{{ file.date }}</td>
-                </tr>
-                {% endfor %}
+                        </td>
+                        <td class="description">{{ file.description }}</td>
+                        <td class="date">{{ file.date }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>

@@ -48,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+        ordering = ['-date_joined']
 
     def get_full_name(self):
         return self.name

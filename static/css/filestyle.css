@@ -153,7 +153,7 @@ td img{
     display: block;
 }
 
-.searchbar{
+.searchbar, .searchbar form{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,7 +162,7 @@ td img{
     height: 40px;
 }
 
-.searchbar input{
+.searchbar form input{
     width: 400px;
     height: 100%;
     border: 1px solid #dddddd;
@@ -170,7 +170,7 @@ td img{
     font-size: 18px;
 }
 
-.searchbar button{
+.searchbar form button{
     outline: none;
     padding: 0 10px;
     border: 1px solid green;

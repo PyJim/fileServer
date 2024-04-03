@@ -145,6 +145,7 @@ LOGOUT_REDIRECT_URL = '/signin/'
 
 
 
+
 # Email Config
 
 EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
