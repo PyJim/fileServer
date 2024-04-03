@@ -5,68 +5,65 @@
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-    <title>Signup</title> 
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+    <title>Login</title> 
 </head> 
 
     <body>
-        <div class="main-signup">
-            <div class="responsive-form"> 
-                <h1>File Server</h1> 
-                <h3> 
-                    Good to have you here.
-                </h3> 
-                <form action="" method="POST" class="form-container">
-                    {% csrf_token %}
-    
-                    <label for="email" 
-                        class="form-container-label"> 
-                        Email: 
-                    </label> 
-                    <input type="email"
-                        id="email"
-                        name="email"
-                        value="{{data.email}}" 
-                        placeholder="Your email address" 
-                        class="form-container-input"
-                        required>
-                    
-                    <label for="password" 
-                        class="form-container-label"> 
-                        Password: 
-                    </label> 
-                    <input type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Password" 
-                        class="form-container-input"
-                        required>
-    
-                    <label for="confirm_password" 
-                        class="form-container-label"> 
-                        Confirm Password: 
-                    </label> 
-                    <input type="password" 
-                        id="confirm_password" 
-                        name="confirm_password" 
-                        placeholder="Confirm Password" 
-                        class="form-container-input"
-                        required> 
-        
-                    <button type="submit" 
-                            class="form-container-button"> 
-                        Create Account 
-                    </button> 
-                </form> 
-                <div class="others">
-                    <a href="/signin/">Already have an account? Signin</a> 
-                </div>
+        <div class="main">
+            
+            <div class="banner">
+                <img src="{% static 'images/car.jpg' %}" alt="">
             </div>
-            {% if messages %}
-                {% for message in messages %}
-                    <p style="text-align: center;">{{message}}</p>
-                {% endfor %}
-            {% endif %} 
+            <div class="form">
+                <div class="contact-form"> 
+                    <div class="welcome">
+                        <h1>Create your account</h1> 
+                        <p> We are glad to have you join us.</p>
+                    </div>
+                    
+                    <form action="" method="POST" class="form-container">
+                        {% csrf_token %} 
+                        
+                        
+                        <input type="email"
+                            id="email"
+                            name="email" 
+                            placeholder="Your email address" 
+                            class="form-container-input"
+                            required>
+                        
+                        <input type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Password" 
+                            class="form-container-input"
+                            required>
+                        
+                        <input type="password" 
+                            id="confirm_password" 
+                            name="confirm_password" 
+                            placeholder="Password" 
+                            class="form-container-input"
+                            required>
+                                    
+                        <button type="submit" 
+                                class="form-container-button"> 
+                            Signup 
+                        </button>
+                        
+                    </form> 
+                    <div class="others">
+                         
+                        <a href="/signin/">Already have an account? Login</a>
+                    </div>
+                </div> 
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="text-align: center;">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </body> 
 

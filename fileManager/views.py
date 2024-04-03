@@ -7,9 +7,11 @@ import os
 import threading
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.contrib import messages
 
 
 
+# create a thread to asyncrhonously send emails
 class EmailThread(threading.Thread):
 
     def __init__(self, email):
@@ -19,6 +21,7 @@ class EmailThread(threading.Thread):
     
     def run(self):
         self.email.send()
+
 
 # Create your views here.
 
@@ -41,12 +44,10 @@ def files_page(request):
     
 
 
-# Create your views here.
 def email_file(request, file_id):
     if request.method =='POST':
         requested_file = File.objects.get(pk=file_id)
         file_obj = get_object_or_404(File, pk=file_id)
-        user = request.user
 
         to_email = request.POST.get('email')
         email_subject = requested_file.title
@@ -67,13 +68,17 @@ def email_file(request, file_id):
         # Send the email asynchronously
         EmailThread(email).start()
 
+        # increment the number of times the file has been emailed
         requested_file.emailed_count += 1
         requested_file.save()
 
-        # You might want to redirect to a success page after sending the email
+        messages.add_message(request, messages.SUCCESS, 'File sent successfully')
+
         return redirect('/files')
     else:
         return render(request, 'send_file.html')
+    
+
 
 @login_required
 def files_page(request):
@@ -87,6 +92,8 @@ def files_page(request):
     else:
         files = File.objects.all()
         return render(request, 'files.html', {'user': user, 'files': files})
+    
+
     
 
 @login_required

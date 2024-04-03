@@ -5,62 +5,61 @@
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
     <title>Login</title> 
 </head> 
 
     <body>
-        <div class="main-login">
+        <div class="main">
             
-            <div class="responsive-form"> 
-                <h1>File Server</h1> 
-                <h3> 
-                    Welcome Back
-                </h3>
-                
-                <form action="" method="POST" class="form-container">
-                    {% csrf_token %} 
+            <div class="banner">
+                <img src="{% static 'images/car.jpg' %}" alt="">
+            </div>
+            <div class="form">
+                <div class="contact-form"> 
+                    <div class="welcome">
+                        <h1>Login to your account</h1> 
+                        <p> We are glad to welcome you back.</p>
+                    </div>
                     
-                    
-
-                    <label for="email" 
-                        class="form-container-label"> 
-                        Email: 
-                    </label> 
-                    <input type="email"
-                        id="email"
-                        name="email" 
-                        placeholder="Your email address" 
-                        class="form-container-input"
-                        required>
-                    
-                        <label for="password" 
-                        class="form-container-label"> 
-                        Password: 
-                    </label> 
-                    <input type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Password" 
-                        class="form-container-input"
-                        required> 
-        
-                    <button type="submit" 
-                            class="form-container-button"> 
-                        Login 
-                    </button>
-                    
-                </form> 
-                <div class="others">
-                    <a href="/forgot_password/">Forgot Password</a> 
-                    <a href="/signup/">Do not have an account? Signup</a> 
-                </div>
-            </div> 
-            {% if messages %}
-                {% for message in messages %}
-                    <p style="text-align: center;">{{message}}</p>
-                {% endfor %}
-            {% endif %}
+                    <form action="" method="POST" class="form-container">
+                        {% csrf_token %} 
+                        
+                        
+                        <input type="email"
+                            id="email"
+                            name="email" 
+                            placeholder="Your email address" 
+                            class="form-container-input"
+                            required>
+                        
+                        <input type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Password" 
+                            class="form-container-input"
+                            required> 
+                        
+                        <a href="/forgot_password/">Forgot Password</a>
+            
+                        <button type="submit" 
+                                class="form-container-button"> 
+                            Login 
+                        </button>
+                        
+                    </form> 
+                    <div class="others">
+                         
+                        <a href="/signup/">Do not have an account? Signup</a>
+                        <a href="/admin/">Login as admin</a> 
+                    </div>
+                </div> 
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="text-align: center;">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </body> 
 

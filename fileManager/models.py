@@ -37,11 +37,12 @@ class File(models.Model):
             elif file_extension in ['.mp4', '.avi', '.mkv', '.mov', '.wmv']:
                 self.file_type = 'video'
             else:
-                self.file_type = 'unknown'
+                self.file_type = 'other'
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
     
     class Meta:
+        # order items based of number of downloads in descending order
         ordering = ["-downloads_count"]

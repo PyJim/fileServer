@@ -5,44 +5,48 @@
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-    <title>Reset Forgotten Password</title> 
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+    <title>Login</title> 
 </head> 
 
     <body>
-        <div class="main-signup">
-            <div class="responsive-form"> 
-                <h1>File Server</h1> 
-                <h3> 
-                    Send file.
-                </h3> 
-                <form action="" method="POST" class="form-container">
-                    {% csrf_token %}
-    
-                    <label for="email" 
-                        class="form-container-label"> 
-                        Email: 
-                    </label> 
-                    <input type="email"
-                        id="email"
-                        name="email"
-                        placeholder="email address" 
-                        class="form-container-input"
-                        required>
-    
-                
-        
-                    <button type="submit" 
-                            class="form-container-button"> 
-                        Send 
-                    </button> 
-                </form> 
+        <div class="main">
+            
+            <div class="banner">
+                <img src="{% static 'images/car.jpg' %}" alt="">
             </div>
-            {% if messages %}
-                {% for message in messages %}
-                    <p style="text-align: center;">{{message}}</p>
-                {% endfor %}
-            {% endif %} 
+            <div class="form">
+                <div class="contact-form"> 
+                    <div class="welcome">
+                        <h1>Share this file</h1> 
+                        <p> We can help you share this file!</p>
+                    </div>
+                    
+                    <form action="" method="POST" class="form-container">
+                        {% csrf_token %} 
+                        
+                        
+                        <input type="email"
+                            id="email"
+                            name="email" 
+                            placeholder="Your email address" 
+                            class="form-container-input"
+                            required>
+                                    
+                        <button type="submit" 
+                                class="form-container-button"> 
+                            Send 
+                        </button>
+                        
+                    </form> 
+                    
+                </div> 
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="text-align: center;">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </body> 
 
