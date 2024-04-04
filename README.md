@@ -111,7 +111,7 @@ To set up and run the project locally, follow these steps:
 - **Settings**: The project settings are located in `fileserver/settings.py`. Modify these settings as per your requirements.
 - **Database**: By default, the project uses SQLite database. You can change it to any other supported database by modifying the `DATABASES` setting in `settings.py`.
 - **Email Configuration**: Configure email settings in `settings.py` for email functionalities to work properly.
-- **Static and Media files**: Static files are stored in `fileserver/static/` directory and media files (uploaded files) are stored in `fileserver/staticfiles/image/uploads/` directory.
+- **Static and Media files**: Static files are stored in `fileserver/static/` directory and media files (uploaded files) are stored in `fileserver/staticfiles/media/uploads/` directory.
 
 ## Deployment
 
