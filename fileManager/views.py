@@ -44,7 +44,7 @@ def files_page(request):
         return render(request, 'files.html', {'user': user, 'files': files})
     
 
-
+@login_required
 def email_file(request, file_id):
     if request.method =='POST':
         requested_file = File.objects.get(pk=file_id)
@@ -80,7 +80,7 @@ def email_file(request, file_id):
 
         messages.add_message(request, messages.SUCCESS, 'File sent successfully')
 
-        return redirect('/feed')
+        return redirect('/feed/')
     else:
         return render(request, 'send_file.html')
     
