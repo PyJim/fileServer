@@ -33,7 +33,7 @@ def signin(request):
             return redirect('login')
 
     else:
-        return render(request, 'admin/login.html', {})
+        return render(request, 'admin/signin.html', {})
     
 
 @login_required

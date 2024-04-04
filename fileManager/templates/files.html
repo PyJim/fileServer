@@ -28,7 +28,7 @@
             <h1>Available files</h1>
             <div class="searchbar">
             
-                <form method="post" action="{% url 'files' %}">
+                <form method="post" action="{% url 'feed' %}">
                     {% csrf_token %}
                     <input type="text" placeholder="search" name="query" value="{{query}}">
                     <button type="submit">Search</button>
