@@ -3,6 +3,9 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from userAuth.backends import EmailBackend
 from fileManager.models import File
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def signin(request):
@@ -33,6 +36,8 @@ def signin(request):
         return render(request, 'admin/login.html', {})
     
 
+@login_required
+@staff_member_required
 def files(request):
     user = request.user
     files = File.objects.all()
@@ -43,7 +48,8 @@ def files(request):
     else:
         return render(request, 'admin/files.html', {'user': user, 'files': files})
     
-
+@login_required
+@staff_member_required
 def upload_file(request):
     if request.method == 'POST':
         title = request.POST.get('title')
