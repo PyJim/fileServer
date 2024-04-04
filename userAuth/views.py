@@ -138,7 +138,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect('files')
+            return redirect('feed')
             
         else:
             # Return an 'invalid login' error message.
@@ -221,7 +221,7 @@ def reset_password(request):
                 user.set_password(new_password)
                 user.save()
                 messages.add_message(request, messages.SUCCESS, 'Password changed successfully')
-                return redirect("files")
+                return redirect("feed")
             
             if context['has_error']:
                 return render(request, 'authenticate/reset_password.html', context)

@@ -45,4 +45,4 @@ class File(models.Model):
     
     class Meta:
         # order items based of number of downloads in descending order
-        ordering = ["-downloads_count"]
+        ordering = ["-date"]

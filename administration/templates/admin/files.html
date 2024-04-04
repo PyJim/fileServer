@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="aside">
-            <h1>File Server</h1>
+            <h1>File Server Admin</h1>
             <div class="actionables">
                 <a href="/reset_password">change password</a>
             </div>
@@ -25,7 +25,7 @@
                 <p class="email">{{ user.email }}</p>
                 <img src="{% static 'images/profile.png' %}" alt="">
             </div>
-            <h1>Available files</h1>
+            <h1>Uploaded files</h1>
             <div class="searchbar">
             
                 <form method="post" action="{% url 'files' %}">
@@ -49,8 +49,8 @@
                                 <p>{{ file.description }}</p>
                             </div>
                             <div class="action">
-                                <a href="email/{{file.pk}}" id="share">share</a>
-                                <a href="download/{{file.pk}}" id="download">download</a>
+                                <p>Emailed: {{file.emailed_count}}</p>
+                                <p>Downloaded:{{file.downloads_count}}</p>
                             </div>
                         </div>
                     {% endfor %}
@@ -59,6 +59,10 @@
             {% else %}
                 <p>No files found</p>
             {% endif %}
+            <div class="upload">
+                <a href="/administration/upload/" class="upload">Upload File</a>
+            </div>
+            
         </div>
     </div>
 </body>

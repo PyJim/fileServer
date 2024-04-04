@@ -18,41 +18,38 @@
             <div class="form">
                 <div class="contact-form"> 
                     <div class="welcome">
-                        <h1>Login to your account</h1> 
-                        <p> We are glad to welcome you back.</p>
+                        <h1>Upload new file</h1> 
+                        <p> Share file with community. </p>
                     </div>
                     
-                    <form action="" method="POST" class="form-container">
+                    <form action= {% url 'upload' %} method="POST" class="form-container">
                         {% csrf_token %} 
                         
                         
-                        <input type="email"
-                            id="email"
-                            name="email" 
-                            placeholder="Your email address" 
+                        <input type="text"
+                            id="title"
+                            name="title" 
+                            placeholder="Title of file" 
                             class="form-container-input"
                             required>
                         
-                        <input type="password" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Password" 
+                        <input type="text" 
+                            id="description" 
+                            name="description" 
+                            placeholder="description of file" 
                             class="form-container-input"
-                            required> 
+                            required>
+
+                        <input type="file" name="file" id="file">
                         
-                        <a href="/forgot_password/">Forgot Password</a>
             
                         <button type="submit" 
                                 class="form-container-button"> 
-                            Login 
+                            Upload
                         </button>
                         
                     </form> 
-                    <div class="others">
-                         
-                        <a href="/signup/">Do not have an account? Signup</a>
-                        <a href="/administration/login">Login as admin</a> 
-                    </div>
+
                 </div> 
                 {% if messages %}
                     {% for message in messages %}

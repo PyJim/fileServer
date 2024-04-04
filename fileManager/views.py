@@ -8,6 +8,7 @@ import threading
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib import messages
+import mimetypes
 
 
 
@@ -62,8 +63,13 @@ def email_file(request, file_id):
 
         # Attach the file to the email
         file_path = file_obj.file.path
+        extension = os.path.splitext(file_path)[1].lower()
+        mime_type, _ = mimetypes.guess_type(file_path)  # Get MIME type
+        if not mime_type:
+            mime_type = 'application/octet-stream'
+
         with open(file_path, 'rb') as file:
-            email.attach(file_obj.title, file.read(), 'application/octet-stream')
+            email.attach(file_obj.title, file.read(), mime_type)
 
         # Send the email asynchronously
         EmailThread(email).start()
@@ -74,7 +80,7 @@ def email_file(request, file_id):
 
         messages.add_message(request, messages.SUCCESS, 'File sent successfully')
 
-        return redirect('/files')
+        return redirect('/feed')
     else:
         return render(request, 'send_file.html')
     
