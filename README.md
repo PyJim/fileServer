@@ -120,7 +120,7 @@ To set up and run the project locally, follow these steps:
 
 
 ### URL
-The deployed version of the application can be found [here](https://github.com/)
+The deployed version of the application can be found [here](https://fileserver-qnur.onrender.com/)
 
 
 ## Testing
