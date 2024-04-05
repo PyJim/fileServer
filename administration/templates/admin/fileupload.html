@@ -22,7 +22,7 @@
                         <p> Share file with community. </p>
                     </div>
                     
-                    <form action= {% url 'upload' %} method="POST" class="form-container">
+                    <form action= {% url 'upload' %} method="POST" class="form-container" enctype="multipart/form-data">
                         {% csrf_token %} 
                         
                         
@@ -40,7 +40,7 @@
                             class="form-container-input"
                             required>
 
-                        <input type="file" name="file" id="file">
+                        <input type="file" name="file" id="file" required>
                         
             
                         <button type="submit" 

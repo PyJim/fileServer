@@ -5,6 +5,8 @@ from userAuth.backends import EmailBackend
 from fileManager.models import File
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+import os
+from django.conf import settings
 
 
 # Create your views here.
@@ -54,10 +56,15 @@ def upload_file(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
-        uploaded_file = request.POST.get('file')
+        uploaded_file = request.FILES['file']
 
         file_instance = File.objects.create(title=title, description=description, file=uploaded_file)
         file_instance.save()
+
+        with open(os.path.join(settings.MEDIA_ROOT, uploaded_file.name), 'wb') as f:
+            for chunk in uploaded_file.chunks():
+                f.write(chunk)
+
         return redirect('/administration/files/')
     else:
         return render(request, 'admin/fileupload.html')

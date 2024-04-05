@@ -14,7 +14,7 @@ class File(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
-    file = models.FileField(upload_to='uploads/', default='')
+    file = models.FileField(upload_to='', default='')
     date = models.DateTimeField(auto_now_add=True)
     file_type = models.CharField(max_length=50, blank=True)
     downloads_count = models.IntegerField(default=0)
