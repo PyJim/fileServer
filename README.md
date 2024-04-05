@@ -120,7 +120,7 @@ To set up and run the project locally, follow these steps:
 
 
 ### URL
-The deployed version of the application can be found [here](https://github.com/)
+The deployed version of the application can be found [here](https://fileserver-qnur.onrender.com)
 
 
 ## Testing
@@ -133,6 +133,11 @@ Unit tests have been written. run:
 ```
 to run all the tests of the various endpoints.
 
+## Administrator
+For the sake of testing of the deployed version, the administrator login details are:
+
+`Email`: admin@fileserver.com
+`Password`: password
 
 ## Images of Interface
 
