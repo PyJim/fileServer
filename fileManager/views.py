@@ -106,7 +106,7 @@ def files_page(request):
 def download_file(request, file_id):
     requested_file = File.objects.get(pk=file_id)
     file_obj = get_object_or_404(File, pk=file_id)
-    file_path = file_obj.file.path
+    file_path = requested_file.file.path
     with open(file_path, 'rb') as file:
         response = HttpResponse(file.read(), content_type='application/force-download')
         response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)

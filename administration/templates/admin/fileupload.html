@@ -22,7 +22,7 @@
                         <p> Share file with community. </p>
                     </div>
                     
-                    <form action= {% url 'upload' %} method="POST" class="form-container">
+                    <form action= {% url 'upload' %} method="POST" class="form-container" enctype="multipart/form-data">
                         {% csrf_token %} 
                         
                         
