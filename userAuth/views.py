@@ -143,7 +143,7 @@ def login_user(request):
             
         else:
             # Return an 'invalid login' error message.
-            messages.success(request, ("There was an error logging in. Try again."))
+            messages.success(request, ("User does not exist."))
             return redirect('login')
 
     else:
