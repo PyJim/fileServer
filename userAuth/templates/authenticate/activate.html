@@ -1,10 +1,10 @@
 {% autoescape off %}
 
-    <h2>Hi {{user.email}}!</h2>
+<h2>Hi {{user.email}}!</h2>
 
-    Please click on the button below to verify your account.
+Please click on the button below to verify your account.
 
-    <a href="http://{{domain}}{% url 'activate_user' uidb64=uid token=token %}
-    ">Verify your email</a>
+http://{{domain}}{% url 'activate_user' uidb64=uid token=token %}
+
 {% endautoescape %}
 

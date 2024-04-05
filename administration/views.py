@@ -24,15 +24,15 @@ def signin(request):
             if not user.is_staff:
                 messages.add_message(request, messages.ERROR, 'User not authorized')
                 context['has_error']=True
-                return redirect('login')
+                return redirect('admin_login')
             else:
                 login(request, user)
                 return redirect('files')
             
         else:
             # Return an 'invalid login' error message.
-            messages.success(request, ("There was an error logging in. Try again."))
-            return redirect('login')
+            messages.success(request, ("User does not exist."))
+            return redirect('admin_login')
 
     else:
         return render(request, 'admin/signin.html', {})
