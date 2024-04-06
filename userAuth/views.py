@@ -129,20 +129,21 @@ def login_user(request):
         
         user = EmailBackend().authenticate(request, username=email, password=password)
 
-        if not user.is_email_verified:
-            send_activation_email(user, request)
-            messages.add_message(request, messages.ERROR, 'Email is not verified. Kindly check your inbox')
-            context['has_error']=True
-
-            return render(request, "authenticate/login.html", context)
 
         if user is not None:
+            if not user.is_email_verified:
+                send_activation_email(user, request)
+                messages.add_message(request, messages.ERROR, 'Email is not verified. Kindly check your inbox')
+                context['has_error']=True
+
+                return redirect('request_activation_email')
+            
             login(request, user)
             return redirect('feed')
             
         else:
             # Return an 'invalid login' error message.
-            messages.success(request, ("There was an error logging in. Try again."))
+            messages.success(request, ("User does not exist."))
             return redirect('login')
 
     else:
