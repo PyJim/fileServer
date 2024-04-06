@@ -75,3 +75,11 @@ class TestViews(TransactionTestCase):
         self.assertEqual(response['Content-Type'], 'application/force-download')
         self.assertEqual(response['Content-Disposition'], f'attachment; filename=test.txt')
         CommonTestUtils.cleanup_uploaded_files()
+
+    def test_download_file_unauthenticated(self):
+        self.client.logout()
+        test_file = CommonTestUtils.create_test_file()
+        response = self.client.get(reverse('download_file', args=[self.file.id]))
+
+        self.assertRedirects(response, reverse('login') + '?next=' + reverse('download_file', args=[self.file.id]))
+        CommonTestUtils.cleanup_uploaded_files()
