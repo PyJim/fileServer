@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activate</title>
-</head>
-<body>
-    {% autoescape off %}
+{% autoescape off %}
 
-        <h2>Hi {{user.email}}!</h2>
+Hi {{user.email}}!
 
-        Please click on the button below to verify your account.
+Please click on the button below to verify your account.
 
-        <a href="http://{{domain}}{% url 'activate_user' uidb64=uid token=token %}
-        ">Verify your email</a>
-    {% endautoescape %}
-</body>
-</html>
+http://{{domain}}{% url 'activate_user' uidb64=uid token=token %}
+
+{% endautoescape %}
 
