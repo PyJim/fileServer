@@ -1,11 +1,12 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, TransactionTestCase
 from django.urls import reverse
 from fileManager.models import File
 from userAuth.models import User
 from userAuth.backends import EmailBackend
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
-class TestViews(TestCase):
+class TestViews(TransactionTestCase):
 
     def setUp(self):
         self.client = Client()
@@ -16,6 +17,8 @@ class TestViews(TestCase):
         # Authenticate staff user using EmailBackend and force login
         self.authenticated_user = EmailBackend().authenticate(username='test@example.com', password='password')
         self.client.force_login(self.authenticated_user)
+    
+
 
     def test_files_page_GET_authenticated(self):
         response = self.client.get(self.files_url)
@@ -40,12 +43,22 @@ class TestViews(TestCase):
         self.assertRedirects(response, reverse('login') + '?next=' + self.upload_url)
 
     def test_upload_file_POST_authenticated(self):
-        response = self.client.post(self.upload_url, {'title': 'Test', 'description': 'Test Description', 'file': 'testfile.txt'})
+        test_file = SimpleUploadedFile("test.txt", b"file_content")
+        response = self.client.post(self.upload_url, {
+            'title': 'Test',
+            'description': 'Test Description',
+            'file': test_file
+        })
         self.assertRedirects(response, reverse('files'))
 
     def test_upload_file_POST_unauthenticated(self):
         self.client.logout()
-        response = self.client.post(self.upload_url, {'title': 'Test', 'description': 'Test Description', 'file': 'testfile.txt'})
-        # Redirect to login page when not authenticated
+        test_file = SimpleUploadedFile("test.txt", b"file_content")
+        response = self.client.post(self.upload_url, {
+            'title': 'Test',
+            'description': 'Test Description',
+            'file': test_file
+        })
         self.assertRedirects(response, reverse('login') + '?next=' + self.upload_url)
+
 
