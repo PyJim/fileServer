@@ -10,7 +10,7 @@ class TestViews(TestCase):
     def setUp(self):
         self.client = Client()
         self.feed_url = reverse('feed')
-        self.file = File.objects.create(title='Test File', description='Test Description', file='car.jpg')
+        self.file = File.objects.create(title='Test File', description='Test Description', file='test.txt')
         self.user = User.objects.create_user(email='test@example.com', password='password')
 
         # Authenticate user using EmailBackend and force login
@@ -65,4 +65,4 @@ class TestViews(TestCase):
         response = self.client.get(reverse('download_file', args=[self.file.id]))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'application/force-download')
-        self.assertEqual(response['Content-Disposition'], f'attachment; filename=car.jpg')
+        self.assertEqual(response['Content-Disposition'], f'attachment; filename=test.txt')
