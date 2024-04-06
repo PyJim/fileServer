@@ -136,7 +136,7 @@ def login_user(request):
                 messages.add_message(request, messages.ERROR, 'Email is not verified. Kindly check your inbox')
                 context['has_error']=True
 
-                return render(request, "authenticate/login.html", context)
+                return redirect('request_activation_email')
             
             login(request, user)
             return redirect('feed')
