@@ -69,16 +69,15 @@
 <body>
     <div class="container">
         <img src="https://github.com/PyJim/fileServer/blob/master/static/images/filesys.png?raw=true" alt="fileserver">
-        <h3 class="title">Forgot your password?</h3>
-        <p>Hi {{user.email}}!</p>
+        <h3 class="title">Your File</h3>
+        <p>Hi, {{user.email}} sent you a file from FileServer!</p>
 
-        <p>We received a request to reset your password. If you didn't make this request, simply ignore this email.</p>
+        <p>This email contains an attached file sent by {{user.email}} via the FileServer platform.</p>
 
         <hr color="#e1b4fc" size="1px">
 
-        <p class="small">If you did make this request, just click the button below:</p>
-        <a class="button" href="http://{{domain}}{% url 'reset_forgotten_password' uidb64=uid token=token %}
-        ">RESET MY PASSWORD</a>
+        <p class="small">If you want to to experience the best service of FileServer, click the button below:</p>
+        <a class="button" href="http://{{domain}}/">EXPLORE FILESERVER</a>
 
         <p class="smaller">If you did not make this request, then simply ignore this email and no changes will be done.</p>
 

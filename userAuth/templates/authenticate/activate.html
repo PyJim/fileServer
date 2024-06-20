@@ -1,10 +1,89 @@
-{% autoescape off %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-Hi {{user.email}}!
+    <style>
+        *{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
 
-Please click on the button below to verify your account.
+        body{
+            background-color: white;
+            text-align: center;
+            color: rgb(14, 14, 107);
+        }
+        a{
+            text-decoration: none;
+        }
 
-http://{{domain}}{% url 'activate_user' uidb64=uid token=token %}
+        .container{
+            display: inline-block;
+            text-align: center;
+            padding: 20px;
+            max-width: 650px;
+            gap: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        .container img{
+            max-width: 650px;
+            height: 250px;
+            object-fit: cover;
+        }
 
-{% endautoescape %}
+        .container .title{
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
 
+        .container p{
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .container .button{
+            width: auto;
+            display: inline-block;
+            padding: 12px 40px;
+            background-color: rgb(14, 14, 107);
+            color: white;
+            margin-bottom: 20px;
+        }
+        .container .smaller{
+            font-size: 10px;
+        }
+        .container .small{
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="https://github.com/PyJim/fileServer/blob/master/static/images/filesys.png?raw=true" alt="fileserver">
+        <h3 class="title">Activate your account</h3>
+        <p>Hi {{user.email}}!</p>
+
+        <p>Thank you for signing up with FileServer! To complete the activation of your account and start enjoying our services, please click on the link below:</p>
+
+        <hr color="#e1b4fc" size="1px">
+
+        <p class="small">If you did make this request, just click the button below:</p>
+        <a class="button" href="http://{{domain}}{% url 'activate_user' uidb64=uid token=token %}">ACTIVATE MY ACCOUNT</a>
+
+        <p class="smaller">If you did not make this request, then simply ignore this email and no changes will be done.</p>
+
+        <p>fileserver © · 2024</p>
+
+        <p>Thanks</p>
+    </div>
+</body>
+</html>

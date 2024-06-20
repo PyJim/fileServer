@@ -10,7 +10,9 @@ from validate_email import validate_email
 from .models import User
 from .backends import EmailBackend
 from .utils import generate_token
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
+from django.template.loader import get_template
+from django.template import Context
 from django.conf import settings
 import threading
 from django.contrib.auth.decorators import login_required
@@ -32,8 +34,7 @@ class EmailThread(threading.Thread):
 def send_activation_email(user, request):
     current_site =get_current_site(request)
     email_subject = 'Activate your account'
-    email_body = render_to_string('authenticate/activate.html', {
-        'user': user,
+    email_body = get_template('authenticate/activate.html').render({'user': user,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': generate_token.make_token(user)
@@ -46,7 +47,7 @@ def send_activation_email(user, request):
         to=[user.email],
 
     )
-
+    email.content_subtype = "html"
     EmailThread(email).start()
 
 
@@ -54,7 +55,7 @@ def send_activation_email(user, request):
 def send_forgot_password_reset_email(request, user):
     current_site =get_current_site(request)
     email_subject = 'Reset Password'
-    email_body = render('authenticate/password_OTP.html', {
+    email_body = get_template('authenticate/password_OTP.html').render({
         'user': user,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -68,7 +69,7 @@ def send_forgot_password_reset_email(request, user):
         to=[user.email],
 
     )
-
+    email.content_subtype = "html"
     EmailThread(email).start()
 
 
