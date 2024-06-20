@@ -5,7 +5,7 @@ from .models import File
 from .models import File
 import os
 import threading
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 from django.contrib import messages
 import mimetypes

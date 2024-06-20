@@ -10,7 +10,7 @@ from validate_email import validate_email
 from .models import User
 from .backends import EmailBackend
 from .utils import generate_token
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 import threading
 from django.contrib.auth.decorators import login_required
@@ -54,7 +54,7 @@ def send_activation_email(user, request):
 def send_forgot_password_reset_email(request, user):
     current_site =get_current_site(request)
     email_subject = 'Reset Password'
-    email_body = render_to_string('authenticate/password_OTP.html', {
+    email_body = render('authenticate/password_OTP.html', {
         'user': user,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
